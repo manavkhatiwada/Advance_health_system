@@ -17,18 +17,23 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Name</th>
+      <th scope="col">designation</th>
+      <th scope="col">email</th>
     </tr>
   </thead>
   <tbody>
+    {% for i in patients %}
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <!-- <th scope="row">{{i.id}}</th>// this is give original id of the patient in database -->
+      <th scope="row">{{ forloop.counter }}</th>
+      <!-- // this is give the number of patient in the table -->
+      <td ><a href="{% url 'patient_detail' i.id %}">{{ i.first_name }} {{ i.last_name}}</a></td>
+      <td>{{ i.designation }}</td>
+      <td>{{ i.email_adress}}</td>
+      
     </tr>
+    {% endfor %}
     <tr>
       <th scope="row">2</th>
       <td>Jacob</td>
@@ -44,6 +49,16 @@
   </tbody>
 </table>
     </div>
+    <!-- {% for i in patients %}
+      <h1>{{ i }}</h1>
+    {% endfor %} -->
     
+    {% for i in patients %}
+     <h1>{{i}}</h1>
+    {% endfor %}
+
+    
+
+
 </body>
 </html>
