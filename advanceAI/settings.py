@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'chatbot',
     'student',
     'api',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
