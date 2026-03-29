@@ -96,30 +96,38 @@ def patientDetailView(request,pk):
 #         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class Staff(mixins.ListModelMixin,mixins.CreateModelMixin, generics.GenericAPIView):
-    queryset = StaffModel.objects.all()
-    serializer_class = StaffSerializers
+# class Staff(mixins.ListModelMixin,mixins.CreateModelMixin, generics.GenericAPIView):
+#     queryset = StaffModel.objects.all()
+#     serializer_class = StaffSerializers
 
-    def get(self,request):
-        return self.list(request)
+#     def get(self,request):
+#         return self.list(request)
     
-    def post(self,request):
-        return self.create(request)
+#     def post(self,request):
+#         return self.create(request)
 
 
-class StaffDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
+# class StaffDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
+#     queryset = StaffModel.objects.all()
+#     serializer_class = StaffSerializers
+
+#     def get(self, request, pk=None):
+#         return self.retrieve(request, pk=pk)
+
+#     def put(self, request, pk=None):
+#         return self.update(request, pk=pk)
+
+#     def delete(self, request, pk=None):
+#         return self.destroy(request, pk=pk)
+
+
+
+class Staff(generics.ListCreateAPIView):
     queryset = StaffModel.objects.all()
     serializer_class = StaffSerializers
 
-    def get(self, request, pk=None):
-        return self.retrieve(request, pk=pk)
 
-    def put(self, request, pk=None):
-        return self.update(request, pk=pk)
-
-    def delete(self, request, pk=None):
-        return self.destroy(request, pk=pk)
-
-
-
-
+class StaffDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = StaffModel.objects.all()
+    serializer_class = StaffSerializers
+    lookup_field = 'pk'
