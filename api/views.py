@@ -132,28 +132,33 @@ def patientDetailView(request,pk):
 #     serializer_class = StaffSerializers
 #     lookup_field = 'pk'
 
+""""viewset"""
 
-
-class Staff(viewsets.ViewSet):
-    def list(self,request):
-        queryset= StaffModel.objects.all()
-        serializer = StaffSerializers(queryset,many=True)
-        return Response(serializer.data)
+# class Staff(viewsets.ViewSet):
+#     def list(self,request):
+#         queryset= StaffModel.objects.all()
+#         serializer = StaffSerializers(queryset,many=True)
+#         return Response(serializer.data)
     
 
-    def create(self,request):
-        serializers = StaffSerializers(data=request.data)
-        if serializers.is_valid():
-            serializers.save()
-            return Response(serializers.data,status=status.HTTP_201_CREATED)
-        return Response(serializers.errors)
+#     def create(self,request):
+#         serializers = StaffSerializers(data=request.data)
+#         if serializers.is_valid():
+#             serializers.save()
+#             return Response(serializers.data,status=status.HTTP_201_CREATED)
+#         return Response(serializers.errors)
 
-    def retrieve(self,request,pk=None):
-        staff = get_object_or_404(StaffModel,pk=pk)
-        serializers = StaffSerializers(staff)
-        return Response(serializers.data,status=status.HTTP_200_OK)
+#     def retrieve(self,request,pk=None):
+#         staff = get_object_or_404(StaffModel,pk=pk)
+#         serializers = StaffSerializers(staff)
+#         return Response(serializers.data,status=status.HTTP_200_OK)
     
-    def delete(self,request,pk=None):
-        staff = get_object_or_404(StaffModel,pk=pk)
-        staff.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+#     def delete(self,request,pk=None):
+#         staff = get_object_or_404(StaffModel,pk=pk)
+#         staff.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class StaffViewset(viewsets.ModelViewSet):
+    queryset = StaffModel.objects.all()
+    serializer_class = StaffSerializers

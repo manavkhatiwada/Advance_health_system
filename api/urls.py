@@ -5,8 +5,8 @@ from rest_framework.routers import DefaultRouter
 
 
 router = DefaultRouter()
-router.register('staff',views.Staff,basename='Staff')
-
+# router.register('staff',views.Staff,basename='staff')
+router.register('staff', views.StaffViewset, basename='staff')
 
 urlpatterns = [
     path('students/',views.students),
