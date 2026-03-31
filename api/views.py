@@ -1,4 +1,4 @@
-# from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 # from django.http import JsonResponse
 from . import serializers
 from rest_framework.response import Response
@@ -9,7 +9,7 @@ from .serializers import PatientSerializer, StaffSerializers
 from rest_framework.views import APIView
 from staff.models import Staff as StaffModel
 from django.http import Http404
-from rest_framework import mixins,generics
+from rest_framework import mixins, generics, views, viewsets
 from rest_framework.generics import GenericAPIView
 # def students(request):
 #     students = {'id': 1, 'name': 'John Doe', 'age': 20, 'grade': 'A'}
@@ -122,12 +122,38 @@ def patientDetailView(request,pk):
 
 
 
-class Staff(generics.ListCreateAPIView):
-    queryset = StaffModel.objects.all()
-    serializer_class = StaffSerializers
+# class Staff(generics.ListCreateAPIView):
+#     queryset = StaffModel.objects.all()
+#     serializer_class = StaffSerializers
 
 
-class StaffDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = StaffModel.objects.all()
-    serializer_class = StaffSerializers
-    lookup_field = 'pk'
+# class StaffDetail(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = StaffModel.objects.all()
+#     serializer_class = StaffSerializers
+#     lookup_field = 'pk'
+
+
+
+class Staff(viewsets.ViewSet):
+    def list(self,request):
+        queryset= StaffModel.objects.all()
+        serializer = StaffSerializers(queryset,many=True)
+        return Response(serializer.data)
+    
+
+    def create(self,request):
+        serializers = StaffSerializers(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data,status=status.HTTP_201_CREATED)
+        return Response(serializers.errors)
+
+    def retrieve(self,request,pk=None):
+        staff = get_object_or_404(StaffModel,pk=pk)
+        serializers = StaffSerializers(staff)
+        return Response(serializers.data,status=status.HTTP_200_OK)
+    
+    def delete(self,request,pk=None):
+        staff = get_object_or_404(StaffModel,pk=pk)
+        staff.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

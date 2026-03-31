@@ -1,10 +1,18 @@
-from django.urls import path
+from django.urls import path,include
 
 from . import views
+from rest_framework.routers import DefaultRouter
+
+
+router = DefaultRouter()
+router.register('staff',views.Staff,basename='Staff')
+
 
 urlpatterns = [
     path('students/',views.students),
     path('students/<int:pk>/',views.patientDetailView),
-    path('staff/',views.Staff.as_view()),  # TODO: Create Staff view
-    path('staff/<int:pk>',views.StaffDetail.as_view())
+    # path('staff/',views.Staff.as_view()),  # TODO: Create Staff view
+    # path('staff/<int:pk>',views.StaffDetail.as_view())
+
+    path('',include(router.urls))
 ]
