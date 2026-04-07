@@ -11,8 +11,10 @@ router.register('staff', views.StaffViewset, basename='staff')
 urlpatterns = [
     path('students/',views.students),
     path('students/<int:pk>/',views.patientDetailView),
-    # path('staff/',views.Staff.as_view()),  # TODO: Create Staff view
+    # path('staff/',views.Staff.as_view()),  
     # path('staff/<int:pk>',views.StaffDetail.as_view())
 
-    path('',include(router.urls))
+    path('',include(router.urls)),
+    path('blogs/',views.BlogsView.as_view()),
+    path('comments/',views.CommentsView.as_view()),
 ]

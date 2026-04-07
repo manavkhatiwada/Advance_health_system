@@ -14,6 +14,9 @@ from rest_framework.generics import GenericAPIView
 # def students(request):
 #     students = {'id': 1, 'name': 'John Doe', 'age': 20, 'grade': 'A'}
 #     return JsonResponse(students)
+from blogs.models import Blog,Comment
+from blogs.seralizers import BlogSerializer,CommentSerializer
+
 
 # Create your views here.
 @api_view(['GET', 'POST'])
@@ -162,3 +165,14 @@ def patientDetailView(request,pk):
 class StaffViewset(viewsets.ModelViewSet):
     queryset = StaffModel.objects.all()
     serializer_class = StaffSerializers
+
+
+class BlogsView(generics.ListCreateAPIView):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
+
+
+
+class CommentsView(generics.ListCreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
