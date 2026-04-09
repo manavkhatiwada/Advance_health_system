@@ -16,7 +16,7 @@ from rest_framework.generics import GenericAPIView
 #     return JsonResponse(students)
 from blogs.models import Blog,Comment
 from blogs.seralizers import BlogSerializer,CommentSerializer
-
+from .pagination import Custompagination
 
 # Create your views here.
 @api_view(['GET', 'POST'])
@@ -165,6 +165,7 @@ def patientDetailView(request,pk):
 class StaffViewset(viewsets.ModelViewSet):
     queryset = StaffModel.objects.all()
     serializer_class = StaffSerializers
+    pagination_class = Custompagination
 
 
 class BlogsView(generics.ListCreateAPIView):
